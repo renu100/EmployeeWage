@@ -4,8 +4,12 @@ echo "doing changes on remote"
 IS_PRESENT=1
 IS_PRESENT_HALF_TIME=2
 EMP_RATE_PER_HR=20
-
+MAX_WORKING_DAYS=20
+day=1
+totalWorkHour=0
 #variab
+while [ $day -le $MAX_WORKING_DAYS ]
+do
 empCheck=$((RANDOM%2))
 case $empCheck in
  	$IS_PRESENT)
@@ -15,6 +19,10 @@ case $empCheck in
          *)       
                   	 empHrs=0 ;;
 esac
-echo "dailywage=$((empHrs * EMP_RATE_PER_HR))"
+         dailywage=$(($empHrs * $EMP_RATE_PER_HR))
+          totalWorkHour=$(($totalWorkHour+$empHrs))
+                   ((day++))
+done
 
-
+     monthlyWage=$(($totalWorkHour * $EMP_RATE_PER_HR))
+       echo "Monthly Wage ="$monthlyWage

@@ -6,9 +6,10 @@ IS_PRESENT_HALF_TIME=2
 EMP_RATE_PER_HR=20
 MAX_WORKING_DAYS=20
 MAX_WORK_HR=100
-
+counter=0
 day=1
 totalWorkHour=0
+declaer -a wage
 #variable
 function getWorkHR(){
        local empCheck=$1
@@ -28,8 +29,10 @@ while [ $day -le $MAX_WORKING_DAYS -a $totalWorkHour -le $MAX_WORK_HR ]
        empHrs="$(getWorkHR $empCheck)"
      totalWorkHour=$(( totalWorkHour + empHrs ))
        dailyWage=$(( empHrs * EMP_RATE_PER_HR ))
+          wage[((counter++))]=$dailyWage
         ((day++))
 done
 
 MonthlyWage=$(( totalWorkHour * EMP_RATE_PER_HR ))
+echo ${wage[*]}
 

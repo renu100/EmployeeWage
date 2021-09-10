@@ -9,22 +9,27 @@ MAX_WORK_HR=100
 
 day=1
 totalWorkHour=0
-#variab
-while [ $day -le $MAX_WORKING_DAYS  -a $totalWorkHour -le $MAX_WORK_HR ]
-do
-empCheck=$((RANDOM%2))
-case $empCheck in
- 	$IS_PRESENT)
-			 empHrs=8 ;;
-        $IS_PRESENT_HALF_TIME) 
-			empHrs=8 ;;
-         *)       
-                  	 empHrs=0 ;;
+#variable
+function getWorkHR(){
+       local empCheck=$1
+         local empHrsL=0
+ #selection
+  case $empCheck in
+                   $IS_PRESENT_FULL_TIME) empHrsL=8 ;;
+                   $IS_PRESENT_HALF_TIME) empHrsL=4 ;;
+                       *)empHrsL=0 ;;
 esac
-         dailywage=$(($empHrs * $EMP_RATE_PER_HR))
-          totalWorkHour=$(($totalWorkHour+$empHrs))
-                   ((day++))
+      echo $empHrsL
+
+}
+while [ $day -le $MAX_WORKING_DAYS -a $totalWorkHour -le $MAX_WORK_HR ]
+ do
+       empCheck=$((RANDOM%3))
+       empHrs="$(getWorkHR $empCheck)"
+     totalWorkHour=$(( totalWorkHour + empHrs ))
+       dailyWage=$(( empHrs * EMP_RATE_PER_HR ))
+        ((day++))
 done
 
-     monthlyWage=$(($totalWorkHour * $EMP_RATE_PER_HR))
-       echo "Monthly Wage ="$monthlyWage
+MonthlyWage=$(( totalWorkHour * EMP_RATE_PER_HR ))
+

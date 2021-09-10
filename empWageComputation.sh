@@ -7,19 +7,14 @@ EMP_RATE_PER_HR=20
 
 #variab
 empCheck=$((RANDOM%2))
-
-#selection
-if [ $empCheck -eq $IS_PRESENT ]
-then 
-      echo "Employe is present"
-           empHrs=8
-elif [ $empCheck -eq $IS_PRESENT_HALF_TIME ]
-then
-     empHrs=8
-else
-    echo "absent"
-      empHrs=0
-fi
+case $empCheck in
+ 	$IS_PRESENT)
+			 empHrs=8 ;;
+        $IS_PRESENT_HALF_TIME) 
+			empHrs=8 ;;
+         *)       
+                  	 empHrs=0 ;;
+esac
 echo "dailywage=$((empHrs * EMP_RATE_PER_HR))"
 
 
